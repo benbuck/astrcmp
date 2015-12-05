@@ -1,0 +1,7 @@
+/CVS
+/Debug
+/Release
+/Test
+*.ncb
+*.opt
+*.WW

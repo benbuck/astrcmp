@@ -1,0 +1,41 @@
+CFLAGS = \
+	-DSTANDALONE \
+	-W \
+	-Waggregate-return \
+	-Wall \
+	-Wbad-function-cast \
+	-Wcast-qual \
+	-Wcast-align \
+	-Wdisabled-optimization \
+	-Wfloat-equal \
+	-Winline \
+	-Wlong-long \
+	-Wmissing-declarations \
+	-Wmissing-format-attribute \
+	-Wmissing-noreturn \
+	-Wmissing-prototypes \
+	-Wnested-externs \
+	-Wpacked \
+	-Wpadded \
+	-Wpointer-arith \
+	-Wredundant-decls \
+	-Wshadow \
+	-Wsign-compare \
+	-Wstrict-prototypes \
+	-Wundef \
+	-Wunreachable-code \
+	-Wwrite-strings \
+	-ansi \
+	-pedantic
+
+# All possible warning messages have been enabled above except the following:
+#	-Wconversion - somewhat contradicts warnings for missing prototypes
+#	-Wtraditional - disallows 1.0f, 1L, etc., which weakens strict type checking
+
+all: astrcmp.exe
+
+clean:
+	-rm -f *.exe *.o
+
+astrcmp.exe: astrcmp.c astrcmp.h
+	$(CC) $(CFLAGS) -o astrcmp.exe astrcmp.c

@@ -1,0 +1,67 @@
+// project specific
+-dDEBUG
+-dSTANDALONE
+-i"D:\Visual Studio\VC98\Include"
+
+// set message levels and options
+-w4 // warning level (1 is lowest, 4 is highest)
+-v // verbosity (errors only)
+-width(0, 4) // line wrapping (don't wrap)
+-format=%(%f(%l)\s:\s%)%t\s%n:\s%m // error format (similar to MSC)
+
+// enable extra checking
+-passes(3) // it seems like adding extra passes just slows things down
++ffn // report full file names
++fil // check indentation of labels
++fpn // possible null pointer usage
++fsc // assumes string constants are const char*
+-strong(AcpJcr, dist_t, size_t) // strong type checking
+-index(d, index_t, dist_t) // strong type checking for indices
+
+// disable errors we don't want (level 1)
+
+// disable warnings we don't want (level 2)
+
+// disable informationals we don't want (level 3)
+
+// disable elective notes we don't want (level 4)
+//-e900 // successful completion
+-e911 // implicit expression promotion (small int to int)
+-e912 // implicit binary conversion
+-e915 // implicit conversion
+-e917 // prototype coercion
+-e921 // cast from integral type to integral type
+-e922 // cast to/from float
+-e925 // cast from pointer to pointer
+-e932 // passing near pointer to library function
+-e970 // use of modifier or type outside a typedef
+-e971 // use of 'char' without 'signed' or 'unsigned'
+-e1904 // old style C comment
+
+// add specific function semantics
+
+// compiler specific
+-cmsc
+-d_M_IX86=300   // define the architecture (one of _M_IX86, _M_ALPHA,
+		// _M_PPC, _M_MRX000)
+-d_INTEGRAL_MAX_BITS=64  // denotes support for __int64
++fll            // enable long long
+-d__STDC__ //=0    // Starting with 2.0, the tests within Microsoft header
+		// files for __STDC__ are of the form #if rather than #ifdef
+-dWIN32         // this is necessary because without WIN32 being defined
+-d_WIN32        // a very gross syntax error is exposed in the objbase.h
+        // ... definition of function operator ==().  Alternatively,
+        // ... repair the function definition.
+-d_WIN32_WINNT=0x400
+-dDBG=0         // There is a #if test made for this variable.
+-d_MSC_VER=1200 // compiler version (in decimal)
+//-d__STDC_VERSION__=199901
+-d__STDC_VERSION__=199409L
++rw(__inline)   // activate the __inline keyword
++ppw(import)    // activate #import
+-d_inline=__inline  // _inline is the same as __inline
+-sld10          // sizeof(long double) is 10.
+
+// library includes
+-wlib(1) // warning level for library includes (1 is lowest, 4 is highest)
+-esym(534, printf) // ignoring return value

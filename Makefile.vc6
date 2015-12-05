@@ -1,0 +1,55 @@
+!IF "$(OS)" == "Windows_NT"
+NULL=
+!ELSE 
+NULL=nul
+!ENDIF 
+
+!IF "$(CFG)" == ""
+CFG=astrcmp - Win32 Debug
+!ENDIF
+
+!IF "$(CFG)" == "astrcmp - Win32 Debug"
+
+INTDIR=.\Debug
+OUTDIR=.\Debug
+CFLAGS = /W4 /nologo /c /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /DSTANDALONE /DDEBUG /Zi
+LDFLAGS=/nologo /out:"$(OUTDIR)/astrcmp.exe" /debug /pdb:"$(OUTDIR)\astrcmp.pdb" /pdbtype:sept
+
+!ELSE IF "$(CFG)" == "astrcmp - Win32 Test"
+
+INTDIR=.\Test
+OUTDIR=.\Test
+CFLAGS = /W4 /nologo /c /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /DSTANDALONE /DTEST /DDEBUG /Zi
+LDFLAGS=/nologo /out:"$(OUTDIR)/astrcmp.exe" /debug /pdb:"$(OUTDIR)\astrcmp.pdb" /pdbtype:sept
+
+!ELSE IF "$(CFG)" == "astrcmp - Win32 Release"
+
+INTDIR=.\Release
+OUTDIR=.\Release
+CFLAGS = /W4 /nologo /c  /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /DSTANDALONE /DNDEBUG
+LDFLAGS=/nologo /out:"$(OUTDIR)/astrcmp.exe"
+
+!ENDIF
+
+LD=link.exe
+
+
+all: "$(OUTDIR)\astrcmp.exe"
+
+clean:
+	-@erase "$(INTDIR)\astrcmp.obj"
+	-@erase "$(OUTDIR)\astrcmp.exe"
+	
+"$(INTDIR)\astrcmp.obj": "$(INTDIR)" astrcmp.c astrcmp.h
+	$(CC) $(CFLAGS) astrcmp.c
+
+
+"$(OUTDIR)\astrcmp.exe": "$(OUTDIR)" "$(INTDIR)\astrcmp.obj"
+	$(LD) $(LDFLAGS) "$(INTDIR)\astrcmp.obj"
+
+"$(OUTDIR)" :
+    if not exist "$(OUTDIR)/$(NULL)" mkdir "$(OUTDIR)"
+
+# would conflict with OUTDIR rule currently
+#"$(INTDIR)" :
+#    if not exist "$(INTDIR)/$(NULL)" mkdir "$(INTDIR)"
